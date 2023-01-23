@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<head manifest="manifest.appcache">
+  <title>ofmap</title>
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+  <link rel="stylesheet" href="leaflet.css" />
+  <script src="leaflet.js"></script>
+  <script>
+    function onLoad() {
+
+      var offlineMap = L.map('mapid').setView(
+        [36.260622946456174, 29.316722713837873],
+        18
+      );
+
+      L.tileLayer('PataraOffline/{z}/{x}/{y}.png',
+        { maxZoom: 15, minZoom: 13, attribution: "offline"}).addTo(offlineMap);
+
+      L.tileLayer(
+        "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 21,
+          minZoom: 10,
+          attribution: "online"
+        }
+      ).addTo(offlineMap);
+    }
+  </script> 
+</head>
+
+<body onload="onLoad();">
+  <div id="mapid" style="height: 900px"></div>
+  <script>src="index.js"</script>
+</body>
+
+</html>
